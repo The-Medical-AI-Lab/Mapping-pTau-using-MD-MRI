@@ -66,6 +66,6 @@ Spatial validation using the **Structural Similarity Index (SSIM)** demonstrated
 
 ## 🤝 Acknowledgements
 
-This research was conducted at **Washington University in St. Louis**, in collaboration with the **University of Washington**, **Johns Hopkins University (JHU)**, and the **National Institutes of Health (NIH)**. I gratefully acknowledge **Dr. Dan Benjamini** and **Prof. Shinjini Kundu** for their valuable guidance and insightful discussions throughout this research.
+This research was conducted at **Washington University in St. Louis**, in collaboration with the **University of Washington (UW)**, **Johns Hopkins University (JHU)**, and the **National Institutes of Health (NIH)**. I gratefully acknowledge **Dr. Dan Benjamini** and **Prof. Shinjini Kundu** for their valuable guidance and insightful discussions throughout this research.
 
 
