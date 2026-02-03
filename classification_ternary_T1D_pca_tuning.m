@@ -73,7 +73,7 @@ for fold = 1:k
     'ShowPlots', true, ...
     'Verbose', 1);
 
-    % templateLinear with logistic learner; Lambda/Regularization 可调
+    % templateLinear with logistic learner; Lambda/Regularization
     tLogit = templateLinear('Learner','logistic','Lambda',1e-4,'Regularization','ridge');
     
     logit_mdl = fitcecoc( ...
@@ -123,6 +123,7 @@ for fold = 1:k
         'Verbose', 1);
 
     tSVMrbf = templateSVM('KernelFunction','rbf','Standardize',true);
+
     svmRBF_mdl = fitcecoc( ...
         Xtr, ytr, ...
         'Learners', tSVMrbf, ...
@@ -148,6 +149,7 @@ for fold = 1:k
         'Verbose', 1);
 
     tLinear = templateLinear('Learner','svm','Lambda',1e-4,'Regularization','ridge');
+    
     svmLin_mdl = fitcecoc( ...
         Xtr, ytr, ...
         'Learners', tLinear, ...
@@ -216,8 +218,7 @@ end
 fprintf('\n===== 5-Fold CV Performance (mean ± std) =====\n');
 fprintf('Model         Acc(μ±σ)     Prec(μ±σ)    Rec(μ±σ)     Kappa(μ±σ)\n');
 for m = 1:numel(models)
-    fprintf('%-12s  %.3f±%.3f    %.3f±%.3f    %.3f±%.3f    %.3f±%.3f\n', ...
-        models{m}, mean(acc(:,m)), std(acc(:,m)), mean(prec(:,m)), std(prec(:,m)), mean(rec(:,m)), std(rec(:,m)), mean(kappa(:,m)), std(kappa(:,m)));
+    fprintf('%-12s  %.3f±%.3f    %.3f±%.3f    %.3f±%.3f    %.3f±%.3f\n', models{m}, mean(acc(:,m)), std(acc(:,m)), mean(prec(:,m)), std(prec(:,m)), mean(rec(:,m)), std(rec(:,m)), mean(kappa(:,m)), std(kappa(:,m)));
 end
 
 %% 7) Plot metrics
@@ -400,10 +401,6 @@ colormap('jet');
 colorbar;
 title(sprintf('T1D Grad-CAM-like Importance (FLD)', numComp, side, side));
 saveas(figF, fullfile(outDir, sprintf('heatmap_fld_backproject_T1D.png', side, side)));
-
-%% SVM with linear and rbf kernels
-
-
 
 %% Other Models
 

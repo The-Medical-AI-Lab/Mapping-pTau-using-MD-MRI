@@ -236,7 +236,7 @@ grid on;
 sgtitle('5-Fold CV Regression Performance (with tuning) - T1D');
 saveas(fig,'image/regression/performance_crossvalidation_T1D_pca_tuning.png');
 
-%% 7. Reconstruct maps (same as before)
+%% 7. Reconstruct maps
 
 for m = 1:numel(fields)
     field = fields{m};
@@ -263,7 +263,7 @@ for m = 1:numel(fields)
         title(DataForStat.cases{i},'FontName','Arial');
     end
     sgtitle(sprintf('Reconstructed - %s Regression - T1D', models{m}),'FontName','Arial');
-    fname = sprintf('image/regression/reconstruction_%s_T1D_pca_tuning.png', lower(models{m}));
+    fname = sprintf('image/regression/reconstruction_%s_T1D_pca_tuning.png',lower(models{m}));
     saveas(gcf,fname);
 end
 

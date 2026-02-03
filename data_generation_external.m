@@ -734,8 +734,8 @@ for k = 1:numel(fileList)
     
     % 4a. Load feature matrix X (unused here) and original labels y
     S = load(thisFile, 'X', 'y');
-    X = S.X;  
-    y = S.y;  
+    X = S.X;
+    y = S.y;
 
     % 4b. Discretize y into three groups using the precomputed thresholds:
     %     Group 1: y < t1, Group 2: t1 <= y < t2, Group 3: y >= t2

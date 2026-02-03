@@ -409,7 +409,8 @@ for idx = 1:length(indices)
     elseif subject == 'AD'
         title('AD'); % Add a title indicating the index
     end
-    ylabel('T_1 [ms]'); xlabel('MD [\mum^2/ms]'); 
+    ylabel('T_1 [ms]');
+    xlabel('MD [\mum^2/ms]'); 
     grid on; % Enable grid lines
     axis equal; % Ensure equal aspect ratio
 end
@@ -455,7 +456,8 @@ for idx = 1:length(indices)
     elseif subject == 'AD'
         title('AD'); % Add a title indicating the index
     end
-    ylabel('T_2 [ms]'); xlabel('MD [\mum^2/ms]'); 
+    ylabel('T_2 [ms]');
+    xlabel('MD [\mum^2/ms]'); 
     grid on; % Enable grid lines
     axis equal; % Ensure equal aspect ratio
 end
