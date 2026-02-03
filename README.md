@@ -40,40 +40,15 @@ Raw MD-MRI → Preprocessing → Joint Distributions → PCA → Supervised Lear
 
 ---
 
-## 📂 Repository Structure
-
-The repository is organized around the core MATLAB implementation:
-
-- `data_generation.m`  
-  Preprocessing pipeline including artifact removal and binary mask–based voxel selection.
-
-- `pca_visualization_T1D.m`, `pca_visualization_T2D.m`  
-  PCA analysis and visualization scripts for diffusion–relaxation feature spaces.
-
-- `regression_T1D_pca_tuning.m`  
-  `classification_ternary_T2D_pca_tuning.m`  
-  Automated PCA component selection and hyperparameter tuning using Bayesian optimization.
-
-- `slice_regression_T1D_pca.m`  
-  Voxelwise regression and reconstruction of spatial pTau maps.
-
-- `image_regression_T1D_cnn_bo.m`  
-  Exploratory CNN-based voxelwise regression included for methodological comparison; not the primary modeling approach.
-
-- `ot_binary_classification_T1D.m`  
-  Experimental investigation of Optimal Transport–based distances for distribution-level classification.
-
----
-
 ## 📊 Performance Highlights
 
 Across all tasks, the **Random Forest (RF)** model demonstrated superior stability and predictive accuracy.
 
-| Task | Data Source | Metric (mean ± std) | Cohen’s Kappa |
-|-----|------------|---------------------|---------------|
-| **Regression** | T1D | R² = 0.797 ± 0.007 | – |
-| **Binary Classification** | T1D | Accuracy = 0.924 ± 0.002 | 0.803 ± 0.001 |
-| **Ternary Classification** | T2D | Accuracy = 0.858 ± 0.005 | 0.820 ± 0.006 |
+| Task | Data Source | Metric (mean ± std) |
+|-----|------------|---------------------|
+| **Regression** | T1D | R² = 0.797 ± 0.007 |
+| **Binary Classification** | T1D | Accuracy = 0.924 ± 0.002 |
+| **Ternary Classification** | T2D | Accuracy = 0.858 ± 0.005 |
 
 All results are reported as mean ± standard deviation across outer folds of the nested cross-validation.
 
@@ -81,26 +56,16 @@ Spatial validation using the **Structural Similarity Index (SSIM)** demonstrated
 
 ---
 
-## 🧪 Notes on Model Design Choices
-
-- **Why PCA instead of end-to-end CNNs?**  
-  Given the limited sample size and the distributional nature of MD-MRI features, PCA-based feature extraction improves robustness, interpretability, and generalization compared to fully end-to-end deep learning models.
-
-- **Why Random Forest?**  
-  RF models provide strong non-linear modeling capacity, robustness to noise, and intrinsic feature importance measures, making them particularly suitable for high-dimensional biomedical imaging features.
-
----
-
-## 📜 Citation
-
-If you use this framework, codebase, or methodology in your research, please cite the following ISMRM abstract:
+## 📜 Publication
 
 > **Zhang, H.**, Latimer, C. S., Keene, C. D., Benjamini, D., & Kundu, S. (2025).  
 > *Mapping Phosphorylated Tau using Multidimensional MRI in Alzheimer's Disease.*  
-> Proceedings of the International Society for Magnetic Resonance in Medicine (ISMRM).
+> 2026 International Society for Magnetic Resonance in Medicine (ISMRM).
 
 ---
 
 ## 🤝 Acknowledgements
 
-This research was conducted at **Washington University in St. Louis**, in collaboration with the **University of Washington** and the **National Institutes of Health (NIH)**.
+This research was conducted at **Washington University in St. Louis**, in collaboration with the **University of Washington**, **Johns Hopkins University (JHU)**, and the **National Institutes of Health (NIH)**. I gratefully acknowledge **Dr. Dan Benjamini** and **Prof. Shinjini Kundu** for their valuable guidance and insightful discussions throughout this research.
+
+
