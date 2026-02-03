@@ -45,7 +45,7 @@ Raw MD-MRI → Preprocessing → Joint Distributions → PCA → Supervised Lear
 Across all tasks, the **Random Forest (RF)** model demonstrated superior stability and predictive accuracy.
 
 | Task | Data Source | Metric (mean ± std) |
-|-----|------------|---------------------|
+|:----:|:-----------:|:-------------------:|
 | **Regression** | T1D | R² = 0.797 ± 0.007 |
 | **Binary Classification** | T1D | Accuracy = 0.924 ± 0.002 |
 | **Ternary Classification** | T2D | Accuracy = 0.858 ± 0.005 |
