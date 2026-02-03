@@ -1,47 +1,106 @@
 # Mapping Phosphorylated Tau using Multidimensional MRI in Alzheimer's Disease
 
-[cite_start]This repository contains the implementation of a novel imaging framework designed to non-invasively estimate the voxelwise concentration and spatial distribution of **phosphorylated tau (pTau)** in Alzheimer’s Disease (AD)[cite: 1, 13]. 
+This repository implements a multidimensional MRI (MD-MRI)–based imaging framework for **non-invasive voxelwise estimation of phosphorylated tau (pTau)** concentration and spatial distribution in Alzheimer’s disease (AD).
 
-[cite_start]The project integrates **Multidimensional MRI (MD-MRI)** with supervised machine learning to provide a safe alternative to invasive CSF analysis or ionizing tau-PET imaging[cite: 12, 13, 36].
+The proposed framework integrates **voxelwise diffusion–relaxation joint distributions** with **supervised machine learning**, aiming to provide a quantitative and spatially resolved approach for pTau mapping that complements invasive cerebrospinal fluid (CSF) analysis and ionizing tau-PET imaging.
 
-## 📌 Project Overview
+---
 
-[cite_start]Current clinical diagnosis of AD is strongly linked to pTau accumulation, which reflects neuronal dysfunction[cite: 8]. [cite_start]This framework leverages the rich microstructural information embedded in voxelwise diffusion-relaxation joint distributions (T1-D and T2-D) to predict pTau maps that align with histological ground truth[cite: 14, 16, 17].
+## 🧠 Project Overview
 
-### Key Methodology:
-* [cite_start]**Feature Engineering**: Vectorized 2D joint distributions of $T_1$, $T_2$, and Mean Diffusivity (MD)[cite: 16].
-* [cite_start]**Dimensionality Reduction**: Principal Component Analysis (PCA) with a 95% variance threshold[cite: 21].
-* [cite_start]**Optimization**: Hyperparameter selection via **Bayesian Optimization** within a nested cross-validation (5x5 folds) framework[cite: 22].
-* [cite_start]**Model Variety**: Implementation and comparison of Linear/Quadratic Regression, SVR, SVM, MLP, and Random Forest[cite: 23, 24].
+Alzheimer’s disease is strongly associated with the abnormal accumulation of phosphorylated tau (pTau), which reflects neuronal dysfunction and neurodegeneration. Conventional pTau assessment methods, such as CSF biomarkers and tau-PET, are either invasive or involve ionizing radiation, limiting their routine applicability.
+
+This project leverages the rich microstructural information encoded in **voxelwise diffusion–relaxation joint distributions** derived from MD-MRI. By learning statistical relationships between these distributions and histology-derived pTau measurements, the framework produces **voxel-level pTau maps** that demonstrate strong spatial concordance with ground-truth pathology.
+
+---
+
+## 🔬 Methodological Pipeline
+
+**Workflow summary**  
+Raw MD-MRI → Preprocessing → Joint Distributions → PCA → Supervised Learning → Voxelwise pTau Maps → Histological Validation
+
+### Key Components
+
+- **Feature Representation**  
+  Voxelwise 2D joint diffusion–relaxation distributions (T1–D and T2–D) are vectorized to preserve sub-voxel microstructural heterogeneity.
+
+- **Dimensionality Reduction**  
+  Principal Component Analysis (PCA) is applied to the high-dimensional distributional features, retaining **95% of total variance** to reduce noise and improve model stability.
+
+- **Modeling Tasks**  
+  - Regression: continuous pTau concentration estimation  
+  - Binary classification: low vs. high pTau burden  
+  - Ternary classification: multi-level pTau stratification  
+
+- **Learning Algorithms**  
+  Linear and quadratic regression, support vector machines (linear and RBF), multilayer perceptrons (MLP), and random forest models are implemented and systematically compared.
+
+- **Hyperparameter Optimization**  
+  Bayesian Optimization is embedded within a **nested cross-validation framework (5 × 5 folds)** to ensure unbiased performance estimation and robust model selection.
+
+---
 
 ## 📂 Repository Structure
 
-Based on the core MATLAB implementation (see `image_7129c6.png`):
+The repository is organized around the core MATLAB implementation:
 
-* [cite_start]`data_generation.m`: Preprocessing and artifact removal using binary masks[cite: 20].
-* [cite_start]`pca_visualization_T1D.m` / `pca_visualization_T2D.m`: Scripts for dimensionality reduction analysis[cite: 21].
-* `regression_T1D_pca_tuning.m` / `classification_ternary_T2D_pca_tuning.m`: Automated hyperparameter and PCA component tuning.
-* [cite_start]`slice_regression_T1D_pca.m`: Voxelwise regression execution scripts[cite: 23].
-* `image_regression_T1D_cnn_bo.m`: Experimental CNN-based regression with Bayesian Optimization.
-* `ot_binary_classification_T1D.m`: Exploration of Optimal Transport (OT) for distribution-based classification.
+- `data_generation.m`  
+  Preprocessing pipeline including artifact removal and binary mask–based voxel selection.
+
+- `pca_visualization_T1D.m`, `pca_visualization_T2D.m`  
+  PCA analysis and visualization scripts for diffusion–relaxation feature spaces.
+
+- `regression_T1D_pca_tuning.m`  
+  `classification_ternary_T2D_pca_tuning.m`  
+  Automated PCA component selection and hyperparameter tuning using Bayesian optimization.
+
+- `slice_regression_T1D_pca.m`  
+  Voxelwise regression and reconstruction of spatial pTau maps.
+
+- `image_regression_T1D_cnn_bo.m`  
+  Exploratory CNN-based voxelwise regression included for methodological comparison; not the primary modeling approach.
+
+- `ot_binary_classification_T1D.m`  
+  Experimental investigation of Optimal Transport–based distances for distribution-level classification.
+
+---
 
 ## 📊 Performance Highlights
 
-[cite_start]The **Random Forest (RF)** model demonstrated superior stability and accuracy[cite: 25, 29]:
+Across all tasks, the **Random Forest (RF)** model demonstrated superior stability and predictive accuracy.
 
-| Task | Data Source | Metric ($R^2$ or Accuracy) | Cohen's Kappa |
-| :--- | :--- | :--- | :--- |
-| **Regression** | T1D | [cite_start]$0.797 \pm 0.007$ ($R^2$) [cite: 26] | - |
-| **2-class Classification** | T1D | [cite_start]$0.924 \pm 0.002$ (Acc) [cite: 27] | [cite_start]$0.803 \pm 0.001$ [cite: 27] |
-| **3-class Classification** | T2D | [cite_start]$0.858 \pm 0.005$ (Acc) [cite: 28] | [cite_start]$0.820 \pm 0.006$ [cite: 28] |
+| Task | Data Source | Metric (mean ± std) | Cohen’s Kappa |
+|-----|------------|---------------------|---------------|
+| **Regression** | T1D | R² = 0.797 ± 0.007 | – |
+| **Binary Classification** | T1D | Accuracy = 0.924 ± 0.002 | 0.803 ± 0.001 |
+| **Ternary Classification** | T2D | Accuracy = 0.858 ± 0.005 | 0.820 ± 0.006 |
 
-[cite_start]Quantitative validation using **Structural Similarity Index (SSIM)** confirmed strong spatial concordance with histology (Mean SSIM: 0.81–0.90)[cite: 32].
+All results are reported as mean ± standard deviation across outer folds of the nested cross-validation.
+
+Spatial validation using the **Structural Similarity Index (SSIM)** demonstrated strong agreement between predicted pTau maps and histological ground truth, with mean SSIM values ranging from **0.81 to 0.90** across tasks.
+
+---
+
+## 🧪 Notes on Model Design Choices
+
+- **Why PCA instead of end-to-end CNNs?**  
+  Given the limited sample size and the distributional nature of MD-MRI features, PCA-based feature extraction improves robustness, interpretability, and generalization compared to fully end-to-end deep learning models.
+
+- **Why Random Forest?**  
+  RF models provide strong non-linear modeling capacity, robustness to noise, and intrinsic feature importance measures, making them particularly suitable for high-dimensional biomedical imaging features.
+
+---
 
 ## 📜 Citation
 
-If you use this framework or data in your research, please cite our ISMRM abstract:
+If you use this framework, codebase, or methodology in your research, please cite the following ISMRM abstract:
 
-> **Zhang, H.**, Latimer, C. S., Keene, C. D., Benjamini, D., & Kundu, S. (2025). [cite_start]*Mapping Phosphorylated Tau using Multidimensional MRI in Alzheimer's Disease.* [cite: 1, 2, 5]
+> **Zhang, H.**, Latimer, C. S., Keene, C. D., Benjamini, D., & Kundu, S. (2025).  
+> *Mapping Phosphorylated Tau using Multidimensional MRI in Alzheimer's Disease.*  
+> Proceedings of the International Society for Magnetic Resonance in Medicine (ISMRM).
 
 ---
-[cite_start]*This research was conducted at Washington University in St. Louis in collaboration with the University of Washington and the NIH[cite: 3, 4].*
+
+## 🤝 Acknowledgements
+
+This research was conducted at **Washington University in St. Louis**, in collaboration with the **University of Washington** and the **National Institutes of Health (NIH)**.
